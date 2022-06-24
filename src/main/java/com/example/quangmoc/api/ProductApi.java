@@ -15,29 +15,30 @@ import java.util.Optional;
 public class ProductApi {
     @Autowired
     ProductService productService;
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Product>> findAll(){
+    public ResponseEntity<List<Product>> findAll() {
         return ResponseEntity.ok(productService.findAll());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         Optional<Product> product = productService.findById(id);
-        if (!product.isPresent()){
+        if (!product.isPresent()) {
             ResponseEntity.badRequest().build();// khoong co du lieu tra ve
         }
         return ResponseEntity.ok(product.get());//cos du lieu tra ve
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Product> save(@RequestBody Product product){
+    public ResponseEntity<Product> save(@RequestBody Product product) {
         return ResponseEntity.ok(productService.save(product));
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "{id}")
-    public ResponseEntity<Product> update(@PathVariable int id, @RequestBody Product updateProduct){
+    public ResponseEntity<Product> update(@PathVariable int id, @RequestBody Product updateProduct) {
         Optional<Product> product = productService.findById(id);//tim product theo id
-        if (!product.isPresent()){
+        if (!product.isPresent()) {
             ResponseEntity.badRequest().build();// khoong co du lieu tra ve
         }
         Product exitsProduct = product.get();
@@ -50,9 +51,9 @@ public class ProductApi {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
-    public ResponseEntity<?> delete(@PathVariable int id){
+    public ResponseEntity<?> delete(@PathVariable int id) {
         Optional<Product> product = productService.findById(id);//tim product theo id
-        if (!product.isPresent()){
+        if (!product.isPresent()) {
             ResponseEntity.badRequest().build();// khoong co du lieu tra ve
         }
         productService.deleteById(id);
